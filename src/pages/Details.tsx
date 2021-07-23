@@ -5,8 +5,10 @@ import MuiAccordionDetails from '@material-ui/core/AccordionDetails';
 import { makeStyles, withStyles} from '@material-ui/core/styles'
 import { useParams } from 'react-router-dom'
 import axios from 'axios'
-import { Link } from 'react-router-dom'
 import ArrowRightIcon from '@material-ui/icons/ArrowRight';
+import { ParamTypes } from '../interfaces/IMovie'
+import { IMovie } from '../interfaces/IMovie'
+
 const useStyles = makeStyles((theme) => {
   return {
     image: {
@@ -56,18 +58,18 @@ const AccordionDetails = withStyles((theme) => ({
   },
 }))(MuiAccordionDetails);
 
-const Details = () => {
+const Details: React.VFC = () => {
 
-  const [details, setDetails] = useState({})
+  const [details, setDetails] = useState<IMovie>({})
   const [reviews, setReviews] = useState([]) // from movieDB
   // const [nytReviews, setNytReviews] = useState([]) // from New York Times
   const [expanded, setExpanded] = useState('panel1'); // accordions
 
-  const handleChange = (panel) => (event, newExpanded) => {
+  const handleChange = (panel: string) => (event: React.ClickEvent<HTMLDivElement>, newExpanded) => {
     setExpanded(newExpanded ? panel : false);
   };
 
-  const { id } = useParams()
+  const { id } = useParams<ParamTypes>()
 
   const classes = useStyles()
 
@@ -93,8 +95,6 @@ const Details = () => {
     // getNYTReviews()
 
   }, [id])
-  console.log("reviews", reviews)
-  console.log("details", details)
 
   return (
     <>
@@ -118,7 +118,7 @@ const Details = () => {
               <AccordionDetails>
                 <Box className={ classes.logoWrap}>
                   {details?.production_companies?.length &&
-                    details?.production_companies?.map((company, idx) => (
+                    details?.production_companies?.map((company: {name: string, id: number, logo_path: string | null }, idx: string) => (
                       <Paper className={ classes.logo}>
                         <img src={`http://image.tmdb.org/t/p/w400/${company.logo_path}`} alt={ company.name} />
                       </Paper>
@@ -137,10 +137,10 @@ const Details = () => {
                     <Paper className={classes.image}>
                       <img
                         src={`http://image.tmdb.org/t/p/w200/${details.belongs_to_collection.poster_path}`}
-                        alt={details.belongs_to_collection.name} />
+                        alt={details?.belongs_to_collection?.name} />
                     </Paper>
                     <Typography variant="body" className={ classes.textIconAlign}>
-                      <ArrowRightIcon />{details.belongs_to_collection.name}</Typography>
+                      <ArrowRightIcon />{details?.belongs_to_collection?.name}</Typography>
                     </>}
                 </Box>
               </AccordionDetails>

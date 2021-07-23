@@ -1,18 +1,22 @@
-import { useContext} from 'react'
+import React, { useContext} from 'react'
 import { Card, CardActionArea, CardMedia, CardActions, Button, Grid } from '@material-ui/core'
 import { Link } from "react-router-dom"
 import BookmarkBorderIcon from '@material-ui/icons/BookmarkBorder';
 import ArtTrackIcon from '@material-ui/icons/ArtTrack';
 import { GlobalContext } from '../context/GlobalContext'
 import BackspaceIcon from '@material-ui/icons/Backspace';
+import { IMovie } from '../interfaces/IMovie'
 
-const MovieCard = ({ movie }) => {
+type Props = {
+  movie: IMovie
+}
+const MovieCard: React.VFC<Props> = ({ movie }) => {
 
   const { title, poster_path, id } = movie
   const { addBookmark, removeBookmark, bookmarks } = useContext(GlobalContext)
 
   // flag to track if movie already bookmarked
-  const bookmarkedMovie = bookmarks.find(bookmark => bookmark.id === movie.id)
+  const bookmarkedMovie = bookmarks.find((bookmark: IMovie) => bookmark.id === movie.id)
 
   return (
     <Card >
