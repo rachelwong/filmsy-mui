@@ -1,14 +1,30 @@
 import React from 'react'
-import { Typography } from '@material-ui/core'
-import MovieCard from '../component/MovieCard'
+import { Typography, Grid} from '@material-ui/core'
+import MovieCard from './MovieCard'
+import { makeStyles } from '@material-ui/core/styles'
 
-const MovieGrid = () => {
+const MovieGrid = ({ movies }) => {
+
+  const useStyles = makeStyles((theme) => {
+    return {
+      root: {
+        marginTop: theme.spacing(2)
+      }
+    }
+  })
+
+  const classes = useStyles()
+
   return (
-    <div>
-      <Typography>
-        Movie Grid
-      </Typography>
-    </div>
+    <>
+      <Grid container spacing={2} className={classes.root}>
+        {movies.length && movies.map((movie, idx) => (
+          <Grid item container xs={3} key={ idx } >
+            <MovieCard movie={movie} />
+          </Grid>
+        ))}
+      </Grid>
+    </>
   )
 }
 

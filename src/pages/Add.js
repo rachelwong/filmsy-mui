@@ -1,15 +1,13 @@
 import React, { useState} from 'react'
 import Search from '../component/Search'
-import MovieGrid from '../component/MovieCard'
+import MovieGrid from '../component/MovieGrid'
 
-const Add = ({ fetchMovies }) => {
-
-
+const Add = ({ fetchMovies, movies  }) => {
   return (
-    <div>
-      <Search fetchMovies={ fetchMovies } />
-      <MovieGrid/>
-    </div>
+    <>
+      <Search fetchMovies={fetchMovies} />
+      <MovieGrid movies={ movies }/>
+    </>
   )
 }
 

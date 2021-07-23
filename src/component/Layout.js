@@ -1,9 +1,9 @@
 import React from 'react'
-import { AppBar, Toolbar, Container, IconButton, Typography, Grid, Drawer, List, ListItem, ListItemText, Divider } from '@material-ui/core'
+import { AppBar, Toolbar, Button, Typography, Drawer, List, ListItem,ListItemIcon, ListItemText } from '@material-ui/core'
 import MovieFilterIcon from '@material-ui/icons/MovieFilter';
-
 import { makeStyles } from '@material-ui/core/styles';
-
+import BookmarksTwoToneIcon from '@material-ui/icons/BookmarksTwoTone';
+import ZoomInTwoToneIcon from '@material-ui/icons/ZoomInTwoTone';
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
@@ -36,9 +36,11 @@ const Navbar = ({ children }) => {
     <div className={classes.root}>
       <AppBar position="fixed" className={classes.appBar}>
         <Toolbar>
-          <Typography variant="h6" noWrap>
-            Clipped drawer
-          </Typography>
+          <Button href="/" startIcon={<MovieFilterIcon />} variant="contained" color="primary" disableElevation>
+            <Typography variant="h6" noWrap>
+              Filmsy
+            </Typography>
+          </Button>
         </Toolbar>
       </AppBar>
       <Drawer
@@ -51,11 +53,17 @@ const Navbar = ({ children }) => {
         <Toolbar />
         <div className={classes.drawerContainer}>
           <List>
-              <ListItem button>
+            <ListItem button component="a" href="/">
+              <ListItemIcon>
+                <BookmarksTwoToneIcon/>
+              </ListItemIcon>
                 <ListItemText primary="Bookmarks" />
               </ListItem>
-              <ListItem button>
-                <ListItemText primary="Search" />
+            <ListItem button component="a" href="/add">
+              <ListItemIcon>
+                <ZoomInTwoToneIcon/>
+              </ListItemIcon>
+                <ListItemText primary="Add Bookmark" />
               </ListItem>
           </List>
         </div>

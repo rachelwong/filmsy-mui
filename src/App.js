@@ -12,6 +12,11 @@ function App() {
   const [query, setQuery] = useState("") // search movies query
   const [movies, setMovies] = useState([]) // matching movies
 
+  const getPopularMovies = async () => {
+    const { data } = await axios.get(`https://api.themoviedb.org/3/movie/popular?api_key=${process.env.REACT_APP_API_KEY}&language=en-US&page=1`)
+    setMovies(data.results)
+  }
+
   const fetchMovies = (searchString) => {
     setQuery(searchString);
 
@@ -20,14 +25,14 @@ function App() {
       const { data } = await axios.get(`https://api.themoviedb.org/3/search/movie?api_key=${process.env.REACT_APP_API_KEY}&language=en-US&page=1&include_adult=falses&query=${query}`)
       setMovies(data.results)
     }
-    getMovies()
+    if (query) {
+      getMovies()
+    } else {
+      getPopularMovies()
+    }
   }
 
   useEffect(() => {
-    const getPopularMovies = async () => {
-      const { data } = await axios.get(`https://api.themoviedb.org/3/movie/popular?api_key=${process.env.REACT_APP_API_KEY}&language=en-US&page=1`)
-      setMovies(data.results)
-    }
     getPopularMovies()
   }, [])
   return (
