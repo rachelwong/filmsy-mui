@@ -106,25 +106,25 @@ const Details: React.VFC = () => {
       <Grid container spacing={3}>
         <Grid item>
           <Box>
-            <Paper className={ classes.image}><img src={`http://image.tmdb.org/t/p/w400/${details.poster_path}`} alt={details.title} /></Paper>
+            <Paper className={ classes.image}><img src={`http://image.tmdb.org/t/p/w400/${details.poster_path}`} alt={details!.title} /></Paper>
           </Box>
           </Grid>
         <Grid container item xs={6} className={ classes.contentWrap}>
           <Typography variant="h4">
-            <a href={details.homepage} target="_blank" rel="noreferrer">{details.title}</a>
+            <a href={details!.homepage} target="_blank" rel="noreferrer">{details!.title}</a>
           </Typography>
-          <Typography variant="h6">{details.tagline} | {details.status} {details.release_date}</Typography>
-          <Typography variant="body2">{details.overview}</Typography>
+          <Typography variant="h6">{details!.tagline} | {details!.status} {details!.release_date}</Typography>
+          <Typography variant="body2">{details!.overview}</Typography>
           <Box className={ classes.accordionWrap}>
             <Accordion square expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>
               <AccordionSummary aria-controls="panel1d-content" id="panel1d-header">
                 <Typography>Production</Typography>
               </AccordionSummary>
               <AccordionDetails>
-                <Box className={ classes.logoWrap}>
+                <Box>
                   {details?.production_companies?.length &&
-                    details?.production_companies?.map((company: {name: string, id: number, logo_path: string | null }, idx: string) => (
-                      <Paper className={ classes.logo}>
+                    details?.production_companies?.map((company: {name: string, id: number, logo_path: string | null }, idx: number) => (
+                      <Paper key={ idx }>
                         <img src={`http://image.tmdb.org/t/p/w400/${company.logo_path}`} alt={ company.name} />
                       </Paper>
                     ))}
@@ -136,12 +136,12 @@ const Details: React.VFC = () => {
                 <Typography>Genre & Series</Typography>
               </AccordionSummary>
               <AccordionDetails>
-                <Box className={ classes.belongCollection}>
-                {details.belongs_to_collection &&
+                <Box>
+                {details!.belongs_to_collection &&
                   <>
                     <Paper className={classes.image}>
                       <img
-                        src={`http://image.tmdb.org/t/p/w200/${details.belongs_to_collection.poster_path}`}
+                        src={`http://image.tmdb.org/t/p/w200/${details!.belongs_to_collection.poster_path}`}
                         alt={details?.belongs_to_collection?.name} />
                     </Paper>
                     <Typography variant="body" className={ classes.textIconAlign}>

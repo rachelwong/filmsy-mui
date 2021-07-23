@@ -9,8 +9,11 @@ const initialState = {
   completed: localStorage.getItem('completed') ? JSON.parse(localStorage.getItem('completed')) : []
 }
 
+// for use in typing reducers
+export type MoviesState = typeof initialState
+
 // global state which will be accessible from anywhere
-export const GlobalContext = createContext(initialState)
+export const GlobalContext = createContext<typeof initialState>(initialState)
 
 type Props = {
   children: React.ReactNode

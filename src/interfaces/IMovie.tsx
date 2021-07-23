@@ -9,7 +9,9 @@ export interface IMovie {
   release_date: string;
   poster_path: string | null;
   popularity: number;
-  homepage: string | null;
+  homepage: string | undefined;
+  overview: string | null;
+  status: string | null;
   belongs_to_collection: { name: string, id: number, poster_path: string } | null;
 }
 

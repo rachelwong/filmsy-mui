@@ -1,7 +1,12 @@
 // modify state here
 import { IMovie } from '../interfaces/IMovie'
-  
-export default (state, action) => {
+import { MoviesState } from './GlobalContext'
+
+type ACTIONTYPES =
+  | { type: "ADD_BOOKMARK"; payload: IMovie }
+  | { type: "REMOVE_BOOKMARK"; payload: number }
+
+export default (state: typeof MoviesState, action: ACTIONTYPES) => {
   switch (action.type) {
     case "ADD_BOOKMARK":
       return {
