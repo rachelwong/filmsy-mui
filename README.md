@@ -5,3 +5,7 @@
 ![working screenshot](/src/movie_screenshot.gif)
 
 :construction: Working version can be viewed at https://codesandbox.io/s/irz1r :construction:
+
+
+### Learning Notes
+
