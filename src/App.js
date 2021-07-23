@@ -23,12 +23,12 @@ function App() {
     setQuery(searchString);
 
     // make Api call to movieDB to get list of movies matching query params
-    const getMovies = async () => {
+    const getSearchedMovies = async () => {
       const { data } = await axios.get(`https://api.themoviedb.org/3/search/movie?api_key=${process.env.REACT_APP_API_KEY}&language=en-US&page=1&include_adult=falses&query=${query}`)
       setMovies(data.results)
     }
     if (query) {
-      getMovies()
+      getSearchedMovies()
     } else {
       getPopularMovies()
     }
@@ -37,6 +37,7 @@ function App() {
   useEffect(() => {
     getPopularMovies()
   }, [])
+
   return (
     <GlobalProvider>
       <Layout>

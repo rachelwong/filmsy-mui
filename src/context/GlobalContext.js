@@ -1,10 +1,10 @@
-import { createContext, useReducer } from 'react'
+import { createContext, useReducer, useEffect  } from 'react'
 import AppReducers from './AppReducers'
 
-// TODO - add data persistence
+// TODO - add data persistence with localstorage temporarily
 const initialState = {
-  bookmarks: [],
-  completed: []
+  bookmarks: localStorage.getItem("bookmarks") ? JSON.parse(localStorage.getItem("bookmarks")) : [],
+  completed: localStorage.getItem("completed") ? JSON.parse(localStorage.getItem("completed")) : []
 }
 
 // global state which will be accessible from anywhere
@@ -14,6 +14,12 @@ export const GlobalContext = createContext(initialState)
 // // children is the whole app itself
 export const GlobalProvider = ({ children }) => {
   const [state, dispatch] = useReducer(AppReducers, initialState)
+
+  // everytime the state updates (add/remove), the localstorage is updated
+  useEffect(() => {
+    localStorage.setItem("bookmarks", JSON.stringify(state.bookmarks))
+    localStorage.setItem("completed", JSON.stringify(state.completed))
+  }, [state])
 
   // actions to be - add bookmark, remove bookmark
   const removeBookmark = id => {
