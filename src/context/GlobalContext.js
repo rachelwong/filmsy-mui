@@ -25,12 +25,10 @@ export const GlobalProvider = ({ children }) => {
 
   // actions to be - add bookmark, remove bookmark
   const removeBookmark = id => {
-    console.log("REMOVE BOOKMARK", id)
     dispatch({ type: "REMOVE_BOOKMARK", payload: id })
   }
 
   const addBookmark = movie => {
-    console.log("ADD BOOKMARK", movie)
     dispatch({ type: "ADD_BOOKMARK", payload: movie })
   }
 

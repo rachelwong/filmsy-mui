@@ -1,6 +1,5 @@
 import { useContext} from 'react'
 import { Card, CardActionArea, CardMedia, CardActions, Button, Grid } from '@material-ui/core'
-import { makeStyles } from '@material-ui/core/styles'
 import { Link } from "react-router-dom"
 import BookmarkBorderIcon from '@material-ui/icons/BookmarkBorder';
 import ArtTrackIcon from '@material-ui/icons/ArtTrack';
@@ -9,11 +8,12 @@ import BackspaceIcon from '@material-ui/icons/Backspace';
 
 const MovieCard = ({ movie }) => {
 
-  const { title, poster_path, genre_ids, id } = movie
+  const { title, poster_path, id } = movie
   const { addBookmark, removeBookmark, bookmarks } = useContext(GlobalContext)
 
-  // boolean flag to track if movie already bookmarked
-  const bookmarkedMovie = bookmarks.includes(bookmark => bookmark.id === movie.id)
+  // flag to track if movie already bookmarked
+  const bookmarkedMovie = bookmarks.find(bookmark => bookmark.id === movie.id)
+
   return (
     <Card >
       <CardActionArea disableRipple>
@@ -39,14 +39,25 @@ const MovieCard = ({ movie }) => {
             </Button>
           </Grid>
           <Grid item xs={6} >
-            <Button
-              size="small"
-              color="primary"
-              disableFocusRipple
-              startIcon={<BookmarkBorderIcon />}
-              onClick={() => addBookmark(movie)}>
-              Bookmark
-            </Button>
+            {bookmarkedMovie ? (
+              <Button
+                size="small"
+                color="primary"
+                disableFocusRipple
+                startIcon={<BackspaceIcon />}
+                onClick={() => removeBookmark(movie.id)}>
+                Un-Bookmark
+              </Button>
+              ) : (
+              <Button
+                size="small"
+                color="primary"
+                disableFocusRipple
+                startIcon={<BookmarkBorderIcon />}
+                onClick={() => addBookmark(movie)}>
+                Bookmark
+              </Button>
+            )}
           </Grid>
         </Grid>
       </CardActions>

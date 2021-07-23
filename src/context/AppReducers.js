@@ -3,7 +3,6 @@
 export default (state, action) => {
   switch (action.type) {
     case "ADD_BOOKMARK":
-      console.log("Add bookmark action", state)
       return {
         ...state,
         bookmarks: [action.payload, ...state.bookmarks]

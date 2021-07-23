@@ -46,10 +46,10 @@ function App() {
             <Route path="/" exact>
               <BookmarkList />
             </Route>
-            <Route path="/movie/:id">
-              <Details />
+            <Route exact path="/movie/:id">
+              <Details movies={ movies }/>
             </Route>
-            <Route path="/add">
+            <Route exact path="/add">
               <Add fetchMovies={fetchMovies} movies={ movies } />
             </Route>
           </Switch>

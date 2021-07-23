@@ -1,8 +1,8 @@
-import React, { useState} from 'react'
+import React from 'react'
 import Search from '../component/Search'
 import MovieGrid from '../component/MovieGrid'
 
-const Add = ({ fetchMovies, movies  }) => {
+const Add = ({ fetchMovies, movies }) => {
   return (
     <>
       <Search fetchMovies={fetchMovies} />
