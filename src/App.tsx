@@ -16,6 +16,7 @@ function App() {
   const [movies, setMovies] = useState<IMovie[]>([]) // matching movies
 
   // Question: isn't :Promise<IMovie[] specifying the return type?
+  // not void but has no return value
   const getPopularMovies = async (): Promise<IMovie[]> => {
     const { data } = await axios.get(`https://api.themoviedb.org/3/movie/popular?api_key=${process.env.REACT_APP_API_KEY}&language=en-US&page=1`)
     setMovies(data.results)
@@ -49,7 +50,7 @@ function App() {
               <BookmarkList />
             </Route>
             <Route exact path="/movie/:id">
-              <Details movies={ movies }/>
+              <Details/>
             </Route>
             <Route exact path="/add">
               <Add fetchMovies={fetchMovies} movies={ movies } />

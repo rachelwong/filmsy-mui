@@ -1,5 +1,6 @@
 // modify state here
-
+import { IMovie } from '../interfaces/IMovie'
+  
 export default (state, action) => {
   switch (action.type) {
     case "ADD_BOOKMARK":
@@ -10,7 +11,7 @@ export default (state, action) => {
     case "REMOVE_BOOKMARK":
       return {
         ...state,
-        bookmarks: state.bookmarks.filter(bookmark => bookmark.id !== action.payload)
+        bookmarks: state.bookmarks.filter((bookmark: IMovie) => bookmark.id !== action.payload)
       }
     default:
       return state;

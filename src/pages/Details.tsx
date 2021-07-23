@@ -6,7 +6,6 @@ import { makeStyles, withStyles} from '@material-ui/core/styles'
 import { useParams } from 'react-router-dom'
 import axios from 'axios'
 import ArrowRightIcon from '@material-ui/icons/ArrowRight';
-import { ParamTypes } from '../interfaces/IMovie'
 import { IMovie } from '../interfaces/IMovie'
 
 const useStyles = makeStyles((theme) => {
@@ -58,9 +57,14 @@ const AccordionDetails = withStyles((theme) => ({
   },
 }))(MuiAccordionDetails);
 
+type DetailsParams = {
+  id: string | undefined
+}
+
 const Details: React.VFC = () => {
 
-  const [details, setDetails] = useState<IMovie>({})
+
+  const [details, setDetails] = useState<IMovie | null>(null)
   const [reviews, setReviews] = useState([]) // from movieDB
   // const [nytReviews, setNytReviews] = useState([]) // from New York Times
   const [expanded, setExpanded] = useState('panel1'); // accordions
@@ -69,7 +73,8 @@ const Details: React.VFC = () => {
     setExpanded(newExpanded ? panel : false);
   };
 
-  const { id } = useParams<ParamTypes>()
+
+  const { id } = useParams<DetailsParams>()
 
   const classes = useStyles()
 

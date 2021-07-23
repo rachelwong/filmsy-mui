@@ -1,10 +1,10 @@
+import React from 'react'
 import { createContext, useReducer, useEffect  } from 'react'
 import AppReducers from './AppReducers'
+import { IMovie } from '../interfaces/IMovie'
 
 // TODO - add data persistence with localstorage temporarily
 const initialState = {
-  // bookmarks: [],
-  // completed: []
   bookmarks: localStorage.getItem('bookmarks') ? JSON.parse(localStorage.getItem('bookmarks')) : [],
   completed: localStorage.getItem('completed') ? JSON.parse(localStorage.getItem('completed')) : []
 }
@@ -12,9 +12,14 @@ const initialState = {
 // global state which will be accessible from anywhere
 export const GlobalContext = createContext(initialState)
 
+type Props = {
+  children: React.ReactNode
+}
+
+// QUESTION: Anything needed here?
 // global provider to access actions to manipulate state to be wrapped around entire appBar
 // // children is the whole app itself
-export const GlobalProvider = ({ children }) => {
+export const GlobalProvider: React.VFC<Props> = ({ children }) => {
   const [state, dispatch] = useReducer(AppReducers, initialState)
 
   // everytime the state updates (add/remove), the localstorage is updated
@@ -24,11 +29,11 @@ export const GlobalProvider = ({ children }) => {
   }, [state])
 
   // actions to be - add bookmark, remove bookmark
-  const removeBookmark = id => {
+  const removeBookmark = (id: string): void => {
     dispatch({ type: "REMOVE_BOOKMARK", payload: id })
   }
 
-  const addBookmark = movie => {
+  const addBookmark = (movie: IMovie): void => {
     dispatch({ type: "ADD_BOOKMARK", payload: movie })
   }
 
