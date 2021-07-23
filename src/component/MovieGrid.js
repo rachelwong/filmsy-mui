@@ -18,11 +18,14 @@ const MovieGrid = ({ movies }) => {
   return (
     <>
       <Grid container spacing={2} className={classes.root}>
-        {movies.length && movies.map((movie, idx) => (
-          <Grid item container xs={3} key={ idx } >
-            <MovieCard movie={movie} />
-          </Grid>
-        ))}
+        {movies.length === 0 ?
+          (<Typography variant="h5" align="center">Time to add some movies!</Typography>) :
+          (movies.map((movie, idx) => (
+              <Grid item container xs={3} key={idx} >
+                <MovieCard movie={movie} />
+              </Grid>
+            )))
+        }
       </Grid>
     </>
   )

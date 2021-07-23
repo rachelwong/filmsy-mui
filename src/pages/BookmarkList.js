@@ -1,10 +1,16 @@
-import React from 'react'
+import { useContext} from 'react'
 import {Typography } from '@material-ui/core'
+import { GlobalContext } from '../context/GlobalContext'
+import MovieGrid from '../component/MovieGrid'
 
 const BookmarkList = () => {
+
+  const { bookmarks } = useContext(GlobalContext)
+
   return (
     <div>
-      <Typography>Bookmarks</Typography>
+      <Typography variant="h4">Bookmarks</Typography>
+      <MovieGrid movies={ bookmarks} />
     </div>
   )
 }

@@ -36,7 +36,7 @@ const Navbar = ({ children }) => {
     <div className={classes.root}>
       <AppBar position="fixed" className={classes.appBar}>
         <Toolbar>
-          <Button href="/" startIcon={<MovieFilterIcon />} variant="contained" color="primary" disableElevation>
+          <Button disableRipple href="/add" startIcon={<MovieFilterIcon />} variant="contained" color="primary" disableElevation>
             <Typography variant="h6" noWrap>
               Filmsy
             </Typography>

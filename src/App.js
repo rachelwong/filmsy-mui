@@ -7,6 +7,8 @@ import Details from './pages/Details'
 import Add from './pages/Add'
 import { useState, useEffect } from 'react'
 import axios from 'axios'
+import {GlobalProvider} from './context/GlobalContext'
+
 function App() {
 
   const [query, setQuery] = useState("") // search movies query
@@ -36,7 +38,7 @@ function App() {
     getPopularMovies()
   }, [])
   return (
-    <div className="App">
+    <GlobalProvider>
       <Layout>
         <Router>
           <Switch>
@@ -53,7 +55,7 @@ function App() {
         </Router>
       </Layout>
       <CssBaseline />
-    </div>
+    </GlobalProvider>
   );
 }
 
