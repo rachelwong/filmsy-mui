@@ -15,9 +15,8 @@ function App() {
   const [query, setQuery] = useState<string>("") // search movies query
   const [movies, setMovies] = useState<IMovie[]>([]) // matching movies
 
-  // Question: isn't :Promise<IMovie[] specifying the return type?
-  // not void but has no return value
-  const getPopularMovies = async (): Promise<IMovie[]> => {
+  // not returning data so it's a void. but promise because it's async
+  const getPopularMovies = async (): Promise<void> => {
     const { data } = await axios.get(`https://api.themoviedb.org/3/movie/popular?api_key=${process.env.REACT_APP_API_KEY}&language=en-US&page=1`)
     setMovies(data.results)
   }
@@ -26,7 +25,7 @@ function App() {
     setQuery(searchString);
 
     // make Api call to movieDB to get list of movies matching query params
-    const getSearchedMovies = async (): Promise<IMovie[]> => {
+    const getSearchedMovies = async (): Promise<void> => {
       const { data } = await axios.get(`https://api.themoviedb.org/3/search/movie?api_key=${process.env.REACT_APP_API_KEY}&language=en-US&page=1&include_adult=falses&query=${query}`)
       setMovies(data.results)
     }
