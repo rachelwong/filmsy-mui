@@ -8,22 +8,24 @@ import Add from './pages/Add'
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 import {GlobalProvider} from './context/GlobalContext'
+import { IMovie } from './interfaces/IMovie'
 
 function App() {
 
-  const [query, setQuery] = useState("") // search movies query
-  const [movies, setMovies] = useState([]) // matching movies
+  const [query, setQuery] = useState<string>("") // search movies query
+  const [movies, setMovies] = useState<IMovie[]>([]) // matching movies
 
-  const getPopularMovies = async () => {
+  // not returning data so it's a void. but promise because it's async
+  const getPopularMovies = async (): Promise<void> => {
     const { data } = await axios.get(`https://api.themoviedb.org/3/movie/popular?api_key=${process.env.REACT_APP_API_KEY}&language=en-US&page=1`)
     setMovies(data.results)
   }
 
-  const fetchMovies = (searchString) => {
+  const fetchMovies = (searchString : string):void => {
     setQuery(searchString);
 
     // make Api call to movieDB to get list of movies matching query params
-    const getSearchedMovies = async () => {
+    const getSearchedMovies = async (): Promise<void> => {
       const { data } = await axios.get(`https://api.themoviedb.org/3/search/movie?api_key=${process.env.REACT_APP_API_KEY}&language=en-US&page=1&include_adult=falses&query=${query}`)
       setMovies(data.results)
     }
@@ -47,7 +49,7 @@ function App() {
               <BookmarkList />
             </Route>
             <Route exact path="/movie/:id">
-              <Details movies={ movies }/>
+              <Details/>
             </Route>
             <Route exact path="/add">
               <Add fetchMovies={fetchMovies} movies={ movies } />

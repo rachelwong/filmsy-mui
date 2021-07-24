@@ -3,7 +3,13 @@ import { Typography, Grid, Paper, Button, Box} from '@material-ui/core'
 import MovieCard from './MovieCard'
 import { makeStyles } from '@material-ui/core/styles'
 import PlaylistAddIcon from '@material-ui/icons/PlaylistAdd';
-const MovieGrid = ({ movies }) => {
+import { IMovie } from '../interfaces/IMovie'
+
+
+type Props = {
+  movies: Array<IMovie>
+}
+const MovieGrid: React.VFC<Props> = ({ movies }) => {
 
   const useStyles = makeStyles((theme) => {
     return {

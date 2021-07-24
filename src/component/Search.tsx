@@ -1,7 +1,7 @@
 import React from 'react'
 import { Paper, TextField} from '@material-ui/core'
 
-const Search = ({ fetchMovies }) => {
+const Search = ({ fetchMovies }: {fetchMovies: (searchString: string) => void}) => {
 
   return (
     <Paper>

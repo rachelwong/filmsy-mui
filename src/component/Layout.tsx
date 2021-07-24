@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-const Navbar = ({ children }) => {
+const Navbar = ({ children }: { children: React.ReactNode}) => {
   const classes = useStyles();
   return (
     <div className={classes.root}>

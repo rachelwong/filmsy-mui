@@ -5,8 +5,9 @@ import MuiAccordionDetails from '@material-ui/core/AccordionDetails';
 import { makeStyles, withStyles} from '@material-ui/core/styles'
 import { useParams } from 'react-router-dom'
 import axios from 'axios'
-import { Link } from 'react-router-dom'
 import ArrowRightIcon from '@material-ui/icons/ArrowRight';
+import { IMovie } from '../interfaces/IMovie'
+
 const useStyles = makeStyles((theme) => {
   return {
     image: {
@@ -56,18 +57,24 @@ const AccordionDetails = withStyles((theme) => ({
   },
 }))(MuiAccordionDetails);
 
+type DetailsParams = {
+  id: string | undefined
+}
+
 const Details = () => {
 
-  const [details, setDetails] = useState({})
+
+  const [details, setDetails] = useState<IMovie | null>(null)
   const [reviews, setReviews] = useState([]) // from movieDB
   // const [nytReviews, setNytReviews] = useState([]) // from New York Times
   const [expanded, setExpanded] = useState('panel1'); // accordions
 
-  const handleChange = (panel) => (event, newExpanded) => {
+  const handleChange = (panel: string) => (event: React.ClickEvent<HTMLDivElement>, newExpanded) => {
     setExpanded(newExpanded ? panel : false);
   };
 
-  const { id } = useParams()
+
+  const { id } = useParams<DetailsParams>()
 
   const classes = useStyles()
 
@@ -93,33 +100,31 @@ const Details = () => {
     // getNYTReviews()
 
   }, [id])
-  console.log("reviews", reviews)
-  console.log("details", details)
 
   return (
     <>
       <Grid container spacing={3}>
         <Grid item>
           <Box>
-            <Paper className={ classes.image}><img src={`http://image.tmdb.org/t/p/w400/${details.poster_path}`} alt={details.title} /></Paper>
+            <Paper className={ classes.image}><img src={`http://image.tmdb.org/t/p/w400/${details.poster_path}`} alt={details!.title} /></Paper>
           </Box>
           </Grid>
         <Grid container item xs={6} className={ classes.contentWrap}>
           <Typography variant="h4">
-            <a href={details.homepage} target="_blank" rel="noreferrer">{details.title}</a>
+            <a href={details!.homepage} target="_blank" rel="noreferrer">{details!.title}</a>
           </Typography>
-          <Typography variant="h6">{details.tagline} | {details.status} {details.release_date}</Typography>
-          <Typography variant="body2">{details.overview}</Typography>
+          <Typography variant="h6">{details!.tagline} | {details!.status} {details!.release_date}</Typography>
+          <Typography variant="body2">{details!.overview}</Typography>
           <Box className={ classes.accordionWrap}>
             <Accordion square expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>
               <AccordionSummary aria-controls="panel1d-content" id="panel1d-header">
                 <Typography>Production</Typography>
               </AccordionSummary>
               <AccordionDetails>
-                <Box className={ classes.logoWrap}>
+                <Box>
                   {details?.production_companies?.length &&
-                    details?.production_companies?.map((company, idx) => (
-                      <Paper className={ classes.logo}>
+                    details?.production_companies?.map((company: {name: string, id: number, logo_path: string | null }, idx: number) => (
+                      <Paper key={ idx }>
                         <img src={`http://image.tmdb.org/t/p/w400/${company.logo_path}`} alt={ company.name} />
                       </Paper>
                     ))}
@@ -131,16 +136,16 @@ const Details = () => {
                 <Typography>Genre & Series</Typography>
               </AccordionSummary>
               <AccordionDetails>
-                <Box className={ classes.belongCollection}>
-                {details.belongs_to_collection &&
+                <Box>
+                {details!.belongs_to_collection &&
                   <>
                     <Paper className={classes.image}>
                       <img
-                        src={`http://image.tmdb.org/t/p/w200/${details.belongs_to_collection.poster_path}`}
-                        alt={details.belongs_to_collection.name} />
+                        src={`http://image.tmdb.org/t/p/w200/${details!.belongs_to_collection.poster_path}`}
+                        alt={details?.belongs_to_collection?.name} />
                     </Paper>
                     <Typography variant="body" className={ classes.textIconAlign}>
-                      <ArrowRightIcon />{details.belongs_to_collection.name}</Typography>
+                      <ArrowRightIcon />{details?.belongs_to_collection?.name}</Typography>
                     </>}
                 </Box>
               </AccordionDetails>
