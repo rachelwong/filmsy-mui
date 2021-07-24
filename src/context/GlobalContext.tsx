@@ -7,7 +7,7 @@ import { IMovie } from '../interfaces/IMovie'
 export interface IContext {
   bookmarks: IMovie[];
   completed: IMovie[];
-  removeBookmark: (id: string) => void;
+  removeBookmark: (id: number) => void;
   addBookmark: (movie: IMovie) => void;
 }
 
@@ -54,7 +54,7 @@ export const GlobalProvider = ({ children }: {children: React.ReactNode}) => {
   }, [state])
 
   // actions to be - add bookmark, remove bookmark
-  const removeBookmark = (id: string): void => {
+  const removeBookmark = (id: number): void => {
     dispatch({ type: "REMOVE_BOOKMARK", payload: id })
   }
 

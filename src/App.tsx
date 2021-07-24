@@ -21,7 +21,7 @@ function App() {
     setMovies(data.results)
   }
 
-  const fetchMovies = (searchString : string) => {
+  const fetchMovies = (searchString : string):void => {
     setQuery(searchString);
 
     // make Api call to movieDB to get list of movies matching query params

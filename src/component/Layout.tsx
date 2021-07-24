@@ -1,4 +1,4 @@
-import React, { ReactNode }from 'react'
+import React from 'react'
 import { AppBar, Toolbar, Button, Typography, Drawer, List, ListItem,ListItemIcon, ListItemText } from '@material-ui/core'
 import MovieFilterIcon from '@material-ui/icons/MovieFilter';
 import { makeStyles } from '@material-ui/core/styles';
@@ -29,11 +29,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-type Props = {
-  children: React.ReactNode
-}
 
-const Navbar: React.VFC<Props> = ({ children } ) => {
+const Navbar = ({ children }: { children: React.ReactNode}) => {
   const classes = useStyles();
   return (
     <div className={classes.root}>

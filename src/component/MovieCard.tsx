@@ -7,10 +7,8 @@ import { GlobalContext } from '../context/GlobalContext'
 import BackspaceIcon from '@material-ui/icons/Backspace';
 import { IMovie } from '../interfaces/IMovie'
 
-type Props = {
-  movie: IMovie
-}
-const MovieCard: React.VFC<Props> = ({ movie }) => {
+
+const MovieCard = ({ movie }: {movie: IMovie}) => {
 
   const { title, poster_path, id } = movie
   const { addBookmark, removeBookmark, bookmarks } = useContext(GlobalContext)

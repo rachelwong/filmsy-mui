@@ -1,11 +1,7 @@
 import React from 'react'
 import { Paper, TextField} from '@material-ui/core'
 
-type Props = {
-  fetchMovies: Function
-}
-
-const Search: React.VFC<Props> = ({ fetchMovies }) => {
+const Search = ({ fetchMovies }: {fetchMovies: (searchString: string) => void}) => {
 
   return (
     <Paper>
