@@ -61,7 +61,7 @@ type DetailsParams = {
   id: string | undefined
 }
 
-const Details: React.VFC = () => {
+const Details = () => {
 
 
   const [details, setDetails] = useState<IMovie | null>(null)

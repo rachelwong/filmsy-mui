@@ -3,7 +3,7 @@ import {Typography } from '@material-ui/core'
 import { GlobalContext } from '../context/GlobalContext'
 import MovieGrid from '../component/MovieGrid'
 
-const BookmarkList: React.VFC = () => {
+const BookmarkList = () => {
 
   const { bookmarks } = useContext(GlobalContext)
 

@@ -21,6 +21,28 @@ Learnt from mentor Andrew Chou:
   }
 ```
 
-* everything that needs to be passed from the global context to the provider needs to be declared at the initialisation point of the global context. That includes, any methods (actions to modify state) must be initialised within the initial state, even if it is just as dummy methods.
+* everything that needs to be passed from the global context to the provider needs to be declared at the initialisation point of the global context. That includes, any methods (actions to modify state) must be initialised within the initial state, even if it is just as dummy methods. These methods could just return null.
+* Need to create an interface for the Global Context itself
+
+```javascript
+  export interface IContext {
+    bookmarks: IMovie[];
+    completed: IMovie[];
+    removeBookmark: (id: string) => void;
+    addBookmark: (movie: IMovie) => void;
+  }
+```
+
+The action methods are
+
 * initial state could best be initialised in a function to prevent stale state, as is the example using localStorage as this may set up a small race condition situation
 * Generics! Helper methods! Utilities! (creating new types, defining new types ) --> to come back to! :brain:
+* Pick what you need from docs, don't read everything.
+* Async functions return type is a Promise, but they don't actually HAVE to return a value.
+
+```javascript
+  const getPopularMovies = async (): Promise<void> => {
+      const { data } = await axios.get(`https://api.themoviedb.org/3/movie/popular?api_key=${process.env.REACT_APP_API_KEY}&language=en-US&page=1`)
+      setMovies(data.results)
+  }
+```

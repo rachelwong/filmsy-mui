@@ -13,18 +13,21 @@ export interface IContext {
 
 // this only gets run once
 // const initialState = {
-//   bookmarks: fetchBookmarks ? JSON.parse(fetchBookmarks) : [],
-//   completed: fetchCompleted ? JSON.parse(fetchCompleted) : []
+//   bookmarks: localStorage.getItem('bookmarks') ? JSON.parse(localStorage.getItem('bookmarks')) : [],
+//   completed: localStorage.getItem('completed') ? JSON.parse(localStorage.getItem('completed')) : []
 // }
 
 // converted to function to prevent stale state
-const getInitialState = ()=> {
+const getInitialState = () => {
+
+  // initialising a variable for the localstorage means it doesn't need to be called multiple times at the of ternary evaluation
+  // previous localStorage.getItem() ? localStorage.getItem() : [] <-- called twice, could be a very small race condition here
   const fetchBookmarks = localStorage.getItem('bookmarks')
   const fetchCompleted = localStorage.getItem('completed')
 
   // create dummy methods so that methods can be a part of the type annotation when passing into global provider
   const removeBookmark = () => null
-  const  addBookmark = () => null
+  const addBookmark = () => null
 
   const initialState: IContext = {
     bookmarks: fetchBookmarks ? JSON.parse(fetchBookmarks) : [],
@@ -63,7 +66,7 @@ export const GlobalProvider = ({ children }: {children: React.ReactNode}) => {
   return (
     <GlobalContext.Provider value={{
       bookmarks: state.bookmarks,
-      completed: state.completd,
+      completed: state.completed,
       removeBookmark,
       addBookmark
     }}>
