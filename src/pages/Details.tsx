@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react'
-import { Typography, Grid, Paper, Box, Accordion } from '@material-ui/core'
+import { Typography, Grid, Button, Paper, Box, Accordion, Avatar } from '@material-ui/core'
 import MuiAccordionSummary from '@material-ui/core/AccordionSummary';
 import MuiAccordionDetails from '@material-ui/core/AccordionDetails';
 import { makeStyles, withStyles} from '@material-ui/core/styles'
 import { useParams } from 'react-router-dom'
 import axios from 'axios'
 import ArrowRightIcon from '@material-ui/icons/ArrowRight';
-import { IMovie } from '../interfaces/IMovie'
+import { IMovie, IReview } from '../interfaces/IMovie'
 
 const useStyles = makeStyles((theme) => {
   return {
@@ -34,13 +34,18 @@ const useStyles = makeStyles((theme) => {
       display: 'flex',
       flexWrap: 'wrap'
     },
+    accDetailWrap: {
+      display: 'block',
+    },
     logoWrap: {
-      maxWidth: '200px',
+      maxWidth: '170px',
       widthL: '100%',
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
       padding: '2rem',
+      margin: '.5rem',
+
       "& img": {
         display: 'block',
         width: '100%'
@@ -117,6 +122,7 @@ const Details = () => {
 
   }, [id])
 
+  console.log("reviews", reviews)
   return (
     <>
       <Grid container spacing={3}>
@@ -137,7 +143,7 @@ const Details = () => {
                 <Typography>Production</Typography>
               </AccordionSummary>
               <AccordionDetails>
-                <Box className={ classes.logos}>
+                <Box className={classes.logos}>
                   {details?.production_companies?.length &&
                     details?.production_companies?.map((company: { name: string, id: number, logo_path: string | null }, idx: number) => (
                       <Paper className={classes.logoWrap } key={ idx }>
@@ -147,7 +153,7 @@ const Details = () => {
                 </Box>
               </AccordionDetails>
             </Accordion>
-            <Accordion square expanded={expanded === 'panel2'} onChange={() => handleChange('panel2')}>
+            <Accordion square expanded={true} onChange={() => handleChange('panel2')}>
               <AccordionSummary aria-controls="panel2d-content" id="panel2d-header">
                 <Typography>Genre & Series</Typography>
               </AccordionSummary>
@@ -166,14 +172,23 @@ const Details = () => {
                 </Box>
               </AccordionDetails>
             </Accordion>
-            <Accordion square expanded={expanded === 'panel3'} onChange={() =>  handleChange('panel3')}>
+            <Accordion square expanded={true} onChange={() =>  handleChange('panel3')}>
               <AccordionSummary aria-controls="panel3d-content" id="panel3d-header">
                 <Typography>Reviews</Typography>
               </AccordionSummary>
-              <AccordionDetails>
-                {/* {reviews.length && reviews.map((review, idx) => (
-
-                ))} */}
+              <AccordionDetails className={ classes.accDetailWrap }>
+                {reviews.length && reviews.map((review: IReview, idx: number) => (
+                  <Grid container key={idx} spacing={ 2 }>
+                    <Grid item xs={2}>
+                      <Avatar alt={review?.author} src={review?.author_details?.avatar_path} />
+                    </Grid>
+                    <Grid item xs={10}>
+                      <Typography variant="h6">{review?.author} { new Date(review?.created_at).toLocaleDateString('en-GB')}</Typography>
+                      <Typography variant="body2">{review?.content}</Typography>
+                      <Button variant="contained" color="secondary" href={ review.url}>Read more...</Button>
+                    </Grid>
+                  </Grid>
+                ))}
               </AccordionDetails>
             </Accordion>
           </Box>
