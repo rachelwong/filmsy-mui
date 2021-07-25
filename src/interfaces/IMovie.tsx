@@ -19,3 +19,13 @@ export interface GlobalStateInterface {
   bookmarks: IMovie[];
   completed: IMovie[];
 }
+
+export interface IReview {
+  author: string;
+  author_details: {
+    avatar_path: string
+  };
+  created_at: string;
+  content: string;
+  url: string
+}
