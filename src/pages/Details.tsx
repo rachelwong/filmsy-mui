@@ -87,7 +87,7 @@ const Details = () => {
 
   const [details, setDetails] = useState<IMovie | null>(null)
   const [reviews, setReviews] = useState([]) // from movieDB
-  // const [nytReviews, setNytReviews] = useState([]) // from New York Times
+  const [nytReviews, setNytReviews] = useState([]) // from New York Times
   const [expanded, setExpanded] = useState<string | boolean>('panel1'); // accordions
 
   const handleChange = (panel: string) => (event: React.SyntheticEvent<JSX.Element>, newExpanded: string | boolean): void => {
@@ -99,7 +99,6 @@ const Details = () => {
 
   const classes = useStyles()
 
-  // Question: How to stop useEffect from rendering endlessly even with dependency array?
   useEffect(() => {
     const getMovie = async () => {
       const { data } = await axios.get(`https://api.themoviedb.org/3/movie/${id}?api_key=${process.env.REACT_APP_API_KEY}&language=en-US`)
@@ -111,18 +110,20 @@ const Details = () => {
       setReviews(data.results)
     }
 
-    // const getNYTReviews = async () => {
-    //   const { data } = await axios.get(`https://api.nytimes.com/svc/movies/v2/reviews/search.json?query=${encodeURIComponent(details.title)}&api-key=${process.env.REACT_APP_NYT_API_KEY}`)
-    //   setNytReviews(data.results)
-    // }
+    // Question: How to make sure details.title is not null when this api call runs after getMovie?
+    const getNYTReviews = async () => {
+      const { data } = await axios.get(`https://api.nytimes.com/svc/movies/v2/reviews/search.json?query=${encodeURIComponent(details!.title)}&api-key=${process.env.REACT_APP_NYT_API_KEY}`)
+      setNytReviews(data.results)
+    }
 
     getMovie()
     getReviews()
-    // getNYTReviews()
+    getNYTReviews()
 
   }, [id])
 
-  console.log("reviews", reviews)
+    console.log("search for: ", details?.title!)
+    console.log("nytreviews", nytReviews)
   return (
     <>
       <Grid container spacing={3}>
